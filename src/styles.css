@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+@plugin "daisyui" {
+  themes: dark --default --prefersdark, light --preferslight;
+}
+
+@layer base {
+  @font-face{
+    font-family: "Montserrat";
+  }
+}

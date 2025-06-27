@@ -1,0 +1,52 @@
+
+<div class="container mt-6">
+  <div  *ngIf="authService.esMedico" class="row ml-[7.1%] mb-3">
+    <button type="button" class="btn btn-sm btn-success" routerLink="/sanitario/peticion">
+       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
+  <div class="row">
+    @if(peticiones.length === 0) {
+      <div><p>No hay usuarios que mostrar.</p></div>
+    } @else {
+       <table class="table table-hover table-striped text-center">
+          <thead>
+            <tr>
+              <th>Nombre y apellidos</th>
+              <th>Fecha</th>
+              <th>hora</th>
+              <th>Descripcion</th>
+              <th>Analizado</th>
+              <th>Visible</th>
+              <th  *ngIf="authService.esMedico">Actualizar</th>
+              <th  *ngIf="authService.esMedico">Borrar</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for(peticion of peticiones; track $index) {
+              <tr>
+                <td> {{peticion.usuario.nombre}} {{peticion.usuario.apellidos}} </td>
+                <td> {{peticion.fechaPeticion | date: "dd/MM/yyyy"}} </td>
+                <td> {{peticion.fechaPeticion | date: "hh:mm"}} </td>
+                <td> {{peticion.descripcion}} </td>
+                <td> {{peticion.finalizado ? 'Si' : 'No'}} </td>
+                <td> {{peticion.visible ? 'Si' : 'No'}} </td>
+                <td>
+                  <button  *ngIf="authService.esMedico" class="btn btn-sm btn-warning" (click)="guardarPeticion(peticion)" routerLink="/sanitario/peticion" routerLinkActive="text-secondary" >
+                    Actualizar
+                  </button>
+                </td>
+                <td>
+                  <button  *ngIf="authService.esMedico" class="btn btn-sm btn-error" (click)="eliminarPeticion(peticion.peticionId!)">
+                    Eliminar
+                  </button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+    }
+  </div>
+</div>

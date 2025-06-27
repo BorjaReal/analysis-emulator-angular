@@ -1,0 +1,68 @@
+<div class="container mx-auto my-4">
+  <div class="grid grid-cols-12 justify-items-center">
+    <div class="col-span-12 sm:grid-col-12 md:col-span-4 xl:col-span-3 mt-24">
+      <div class="w-full mx-auto">
+        <usuarios-form
+          (usuarioEmiter)="anyadirUsuario($event)"
+          [usuarioForm] = "usuarioSelected">
+        </usuarios-form>
+      </div>
+    </div>
+    <div class="col-span-12 sm:grid-col-12 md:col-span-8 xl:col-span-9 justify-items-center">
+      <div class="my-6">
+          <form [formGroup]="filtroForm">
+            <label class="text-gray-50  font-bold">
+                SIP :<input type="text" id="sip" name="sip" placeholder="Buscar SIP" formControlName="sip" class="ms-2 bg-amber-50 rounded-lg p-1 text-gray-900 font-semibold">
+            </label>
+        </form>
+      </div>
+    @if(usuariosOfComponent.length > 0) {
+      <table class="table table-hover table-striped">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Apellidos</th>
+            <th>SIP</th>
+            <th>Sexo</th>
+            <th>Dirección</th>
+            <th>Medico</th>
+            <th>Analista</th>
+            <th>Actualizar</th>
+            <th>Eliminar</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for(tiposUsuario of tiposUsuariosOfComponent; track $index) {
+            <tr>
+              <td> {{tiposUsuario.usuario.nombre}} </td>
+              <td> {{tiposUsuario.usuario.apellidos}} </td>
+              <td> {{tiposUsuario.usuario.sip}} </td>
+              <td> {{tiposUsuario.usuario.sexo}} </td>
+              <td> {{tiposUsuario.usuario.direccion}} </td>
+              <td>
+                <input type="checkbox"
+                [(ngModel)]="tiposUsuario.actividadMedico"
+                name="medicoCheckbox{{$index}}"
+                (ngModelChange)="cambiarPerfil(tiposUsuario, 'medico', $event)"
+                class="checkbox checkbox-md checkbox-primary"/>
+              </td>
+              <td>
+                <input
+                type="checkbox"
+                [(ngModel)]="tiposUsuario.actividadAnalista"
+                name="analistaCheckbox{{$index}}"
+                (ngModelChange)="cambiarPerfil(tiposUsuario, 'analista', $event)"
+                class="checkbox checkbox-md checkbox-accent"/>
+              </td>
+              <td><button (click)="actualizarUsuario(tiposUsuario.usuario)" class="btn btn-sm btn-warning">Actualizar</button></td>
+              <td><button (click)="eliminarUsuario(tiposUsuario.usuario.usuarioId!)" class="btn btn-sm btn-error">Eliminar</button></td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    } @else {
+      <div><p>No hay usuarios que mostrar.</p></div>
+    }
+    </div>
+  </div>
+</div>

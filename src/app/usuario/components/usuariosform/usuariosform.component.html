@@ -1,0 +1,148 @@
+
+<form (ngSubmit)="onSubmit()" #userForm="ngForm" class="max-w-md bg-slate-100 shado-2xl rounded-lg p-4">
+  <div>
+    <label class="input input-bordered">
+      <input
+      placeholder="Nombre"
+      name="nombre"
+      #nombre="ngModel"
+      [(ngModel)]="usuarioForm.nombre"
+      required>
+
+    </label>
+  </div>
+  <!--
+    <div *ngIf="nombre.invalid && (nombre.dirty) || nombre.touched" class="alert alert-danger">
+      <p>El nombre es requerido</p>
+    </div>
+  -->
+
+  <div>
+    <label class="input input-bordered mt-1">
+      <input
+        placeholder="Apellidos" name="apellidos"
+        name="apellidos"
+        [(ngModel)]="usuarioForm.apellidos"
+        #apellidos="ngModel"
+        requeried>
+
+      <!--
+        <div *ngIf="apellidos.invalid && (apellidos.dirty) || apellidos.touched" class="alert alert-danger">
+          <p>Los apellidos son requeridos</p>
+        </div>
+      -->
+    </label>
+  </div>
+
+  <div>
+    <label class="input input-bordered mt-1 mb-4">
+      <input
+      type="date"
+      name="fechaNacimiento"
+      [ngModel]="usuarioForm.fechaNacimiento | date:'yyyy-MM-dd'"
+      (ngModelChange)="usuarioForm.fechaNacimiento = $event"
+      required>
+    </label>
+  </div>
+
+  <div class="flex items-center justify-center">
+    <label class="text-slate-700" for="Male">
+      <input class="radio radio-secondary mr-1" type="radio" name="sexo" id="Male" value="M" [(ngModel)]="usuarioForm.sexo">
+        Masculino
+    </label>
+    <label class="text-slate-700 ml-6" for="Female">
+      <input class="radio radio-secondary mr-1"  type="radio" name="sexo" id="Female" value="F" [(ngModel)]="usuarioForm.sexo">
+        Femenino
+    </label>
+  </div>
+
+  <div>
+    <label class="input input-bordered mt-4 mb-1">
+    <input
+      placeholder="DNI"
+      name="dni"
+      #dni="ngModel"
+      [(ngModel)]="usuarioForm.dni"
+      required>
+    </label>
+  </div>
+
+  <div>
+    <label class="input input-bordered mb-1">
+    <input
+      type="text"
+      placeholder="SIP"
+      name="sip"
+      #sip="ngModel"
+      [(ngModel)]="usuarioForm.sip"
+      required>
+    </label>
+  </div>
+
+  <div>
+    <label class="input input-bordered mb-6">
+    <input
+      type="password"
+      placeholder="Contraseña"
+      name="Contrasenya"
+      #contrasenya="ngModel"
+      [(ngModel)]="usuarioForm.contrasenya"
+      required>
+    </label>
+  </div>
+  <!--
+    <div *ngIf="sip.invalid && (sip.dirty) || sip.touched" class="alert alert-danger">
+      <p>El número SIP es requerido</p>
+    </div>
+  -->
+  <div>
+    <label class="input input-bordered mb-1">
+    <input
+      class="form-control my-4"
+      placeholder="Dirección"
+      name="direccion"
+      [(ngModel)]="usuarioForm.direccion">
+    </label>
+  </div>
+  <div>
+    <label class="input input-bordered mb-1">
+      <input
+        class="form-control my-4"
+        placeholder="Código postal"
+        name="codigo_postal"
+        [(ngModel)]="usuarioForm.codigoPostal">
+      </label>
+  </div>
+  <div>
+    <label class="input input-bordered mb-1">
+      <input type="email"
+        class="form-control my-4"
+        placeholder="Email"
+        name="email"
+        [(ngModel)]="usuarioForm.email">
+    </label>
+  </div>
+
+  <div>
+    <label class="input input-bordered mb-1">
+      <input type="text"
+        class="form-control my-4"
+        placeholder="Teléfono"
+        name="telefono"
+        [(ngModel)]="usuarioForm.telefono">
+    </label>
+  </div>
+
+  <div>
+    <button
+      [disabled]="!userForm.form.valid"
+      class="btn btn-success my-2"
+      >{{ usuarioForm.usuarioId > -1? 'Actualizar' : 'Crear' }}
+    </button>
+
+    <button class="btn btn-primary my-2 ms-4 justify-end"
+    (click)="limpiar()"
+     type="button" > {{ 'Limpiar' }}
+    </button>
+  </div>
+</form>

@@ -1,0 +1,114 @@
+ <h1 class="text-2xl font-montserrat font-bold text-secondary text-center mb-2">
+    Registro
+</h1>
+<form
+  class="flex flex-col gap-2"
+  (ngSubmit)="onSubmit()"
+  #userForm="ngForm">
+  <div>
+    <label class="input input-bordered flex items-center gap-2">
+    <input
+      placeholder="Nombre"
+      name="nombre"
+      #nombre="ngModel"
+      [(ngModel)]="usuarioForm.nombre"
+      required>
+    </label>
+
+    <label class="input input-bordered flex items-center gap-2 mt-1">
+      <input
+        placeholder="Apellidos"
+        name="apellidos"
+        [(ngModel)]="usuarioForm.apellidos"
+        #apellidos="ngModel"
+        requeried>
+    </label>
+
+    <label class="input input-bordered flex items-center gap-2 mt-1 mb-4">
+      <input
+      type="date"
+      name="fechaNacimiento"
+      [ngModel]="usuarioForm.fechaNacimiento | date:'yyyy-MM-dd'"
+      (ngModelChange)="usuarioForm.fechaNacimiento = $event"
+      required>
+    </label>
+  </div>
+
+    <div class="flex items-center justify-center">
+      <label class="text-slate-700" for="Male">
+        <input class="radio radio-secondary mr-1" type="radio" name="sexo" id="Male" value="M" [(ngModel)]="usuarioForm.sexo">
+        Masculino
+      </label>
+      <label class="text-slate-700 ml-6" for="Female">
+        <input class="radio radio-secondary mr-1"  type="radio" name="sexo" id="Female" value="F" [(ngModel)]="usuarioForm.sexo">
+        Femenino
+      </label>
+    </div>
+
+  <div>
+    <label class="input input-bordered flex items-center gap-2 mt-4 mb-1">
+      <input
+        placeholder="DNI"
+        name="dni"
+        #dni="ngModel"
+        [(ngModel)]="usuarioForm.dni"
+        required>
+    </label>
+
+    <label class="input input-bordered flex items-center gap-2 mb-1">
+      <input
+        type="text"
+        name="sip"
+        placeholder="Número SIP"
+        #sip="ngModel"
+        [(ngModel)]="usuarioForm.sip"
+      />
+    </label>
+
+    <label class="input input-bordered flex items-center gap-2">
+      <input
+        type="password"
+        placeholder="Contraseña"
+        name="Contrasenya"
+        [(ngModel)]="usuarioForm.contrasenya"
+        required>
+    </label>
+  </div>
+
+  <div>
+    <label class="input input-bordered flex items-center gap-2 mt-4">
+    <input
+      placeholder="Dirección"
+      name="direccion"
+      [(ngModel)]="usuarioForm.direccion">
+    </label>
+
+    <label class="input input-bordered flex items-center gap-2 mt-1">
+      <input
+        placeholder="Código postal"
+        name="codigo_postal"
+        [(ngModel)]="usuarioForm.codigoPostal">
+    </label>
+
+    <label class="input input-bordered flex items-center gap-2 mt-1">
+      <input type="email"
+        placeholder="Email"
+        name="email"
+        [(ngModel)]="usuarioForm.email">
+    </label>
+
+    <label class="input input-bordered flex items-center gap-2 mt-1">
+      <input type="text"
+      placeholder="Teléfono"
+      name="telefono"
+      [(ngModel)]="usuarioForm.telefono">
+    </label>
+
+    </div>
+     <div class="flex items-center justify-center">
+      <button
+        type="submit" class="btn btn-secondary">
+        Registrarse
+      </button>
+    </div>
+</form>

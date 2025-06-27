@@ -1,0 +1,27 @@
+  <div class="navbar bg-base-100">
+  <div class="navbar-start">
+    <div class="dropdown">
+
+    </div>
+    <a routerLink="/usuario" class="btn btn-ghost text-xl font-montserrat">
+      <span class="text-secondary">Analist emulator</span>
+    </a>
+  </div>
+  <div class="navbar-center hidden lg:flex">
+
+  </div>
+
+  <div class="navbar-end gap-4">
+    @if ( authService.authStatus() === 'autenticado' ) {
+    <button class="btn btn-ghost">
+      {{ authService.usuario()()?.nombre }} {{ authService.usuario()()?.apellidos}}
+    </button>
+    <button class="btn btn-sm btn-error" (click)="authService.logout()" routerLink="/auth/login">
+      Salir
+    </button>
+    }
+
+    @else {
+    <a class="btn btn-ghost">...</a>
+    }
+  </div>

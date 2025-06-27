@@ -1,0 +1,154 @@
+<div class="row-auto">
+  <div class="grid grid-cols-12 gap-3">
+     <div class=" col-span-12 sm:col-span-12 md:col-span-4 xl:col-span-3 justify-items-center">
+      <h1 class="my-6">Petición</h1>
+      <div class="col  w-full max-w-xs bg-slate-100 rounded-lg p-4">
+        <form [formGroup]="peticionForm" (ngSubmit)="onSubmit()">
+      <div class="row">
+        <div class="col mb-3">
+          <label for="sip-paciente" class="form-label text-gray-900">SIP del paciente:</label>
+          <input
+          class="input input-bordered flex items-center gap-2 mt-1"
+          placeholder="Buscar por SIP"
+          id="sip-paciente"
+          type="text"
+          formControlName="sip"
+        >
+        </div>
+
+        <div class="mb-3">
+          <label for="nombre" class="form-label text-gray-900">Nombre y apellidos:</label>
+          <input
+          class="input input-bordered flex items-center gap-2 mt-1"
+          id="nombre"
+          type="text"
+          formControlName="nombre">
+        </div>
+
+        <div class="col mb-3">
+          <label for="nacimiento" class="form-label text-gray-900">Fecha de Nacimiento:</label>
+          <input
+            type="date"
+            id="nacimiento"
+            class="input input-bordered flex items-center gap-2 mt-1"
+            name="fechaNacimiento"
+            formControlName="nacimiento">
+        </div>
+
+        <div class="col mb-3">
+          <label for="direccion" class="form-label text-gray-900">Direccion:</label>
+          <input
+          class="input input-bordered flex items-center gap-2 mt-1"
+          id="direccion"
+          formControlName="direccion"
+          type="text"
+        >
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="descripcion" class="form-label text-gray-900">Descripción:</label>
+        <textarea
+        class="textarea textarea-msm flex items-center gap-2 mt-1"
+        placeholder="Descripción"
+        id="descripcion"
+        rows="10"
+        formControlName="descripcion"
+        ></textarea>
+      </div>
+
+      <div class="form-check mb-4">
+        <input
+          id="visible-ck"
+          type="checkbox"
+          class="checkbox checkbox-neutral"
+          formControlName="visible"
+        >
+        <label for="visible-ck" class="form-check-label form-check-label ms-1 text-gray-900">
+          Visible
+        </label>
+      </div>
+      @if(peticionEntrada) {
+        <button
+        type="submit"
+        class="btn btn-warning"
+        >
+        Actualizar
+      </button>
+      } @else {
+        <button
+        type="submit"
+        class="btn btn-success"
+        >
+        Crear
+      </button>
+      }
+      </form>
+    </div>
+  </div>
+    <div class="col-span-12 sm:col-span-12 md:col-span-8  xl:col-span-6 justify-items-center">
+      <h1 class="my-6">Pacientes</h1>
+      @if(usuariosFiltrados.length > 0) {
+      <table class="table table-hover table-striped text-center">
+        <thead>
+          <tr>
+            <th class="whitespace-normal md:whitespace-nowrap">Nombre y apellidos</th>
+            <th class="whitespace-normal md:whitespace-nowrap">Fecha de nacimiento</th>
+            <th class="sm:px-15">Dirección</th>
+            <th>seleccionar</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for(usuario of usuariosFiltrados; track $index) {
+            <tr>
+              <td> {{usuario.nombre}}  {{ usuario.apellidos}}</td>
+              <td> {{usuario.fechaNacimiento | date: "dd/MM/yyyy"}}</td>
+              <td> {{usuario.direccion}} </td>
+              <td> <button class="btn bg-cyan-300 text-black" (click)="seleccionarPaciente(usuario)" >Seleccionar</button> </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+      } @else {
+        <div><p>No hay usuarios que mostrar.</p></div>
+      }
+    </div>
+    <div class="col-span-12 sm:col-span-12 md:col-span-4 xl:col-span-3 justify-items-center">
+      <h1 class="my-6">Análisis</h1>
+      <div class="space-y-2">
+        <div *ngFor="let g of grupos(); index as i" class="border rounded overflow-hidden">
+          <!-- desplegable del grupo -->
+          <button
+            class="w-full px-4 py-2 flex justify-between items-center"
+            (click)="desplegar(i)"
+            [ngClass]="{
+              'bg-cyan-600 hover:bg-green-500': !tieneMarcados(i),
+              'bg-amber-500 hover:bg-yellow-600': tieneMarcados(i)
+            }"
+            >
+            <input type="checkbox"
+              class="me-2"
+              #chek
+              [checked]="g.marcado"
+              (change)="actualizarGrupoDesplegable(i, chek.checked)">
+
+            <span class="italic font-semibold">{{ g.nombre }}</span>
+            <span class="text-xl">{{ g.abierto ? '▾' : '▸' }}</span>
+          </button>
+          <!-- lista de cada grupo -->
+          <ul *ngIf="g.abierto" class="divide-y" >
+            <li *ngFor="let a of g.analitos"class="px-4 py-2 flex justify-between">
+              <label>
+                <input type="checkbox"
+                class="me-6"
+                #chkAnalito
+                [checked]="a.seleccionado"
+                (change)="actualizarEstadoAnalito(i, a, chkAnalito.checked)"> {{ a.nombre }}
+              </label>
+            </li>
+          </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
